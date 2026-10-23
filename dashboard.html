@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Virtual Cloud Storage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">☁️ Virtual Cloud (Unlimited Upload/Download)</a>
+            <div class="d-flex">
+                <span class="navbar-text text-white me-3">Vai trò: <strong>{{ 'Admin (Miễn phí)' if role == 'admin' else 'Khách hàng (Đã kích hoạt)' }}</strong></span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Đăng xuất</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if role == 'admin' %}
+        <div class="card shadow mb-4 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5>⚙️ Bảng Điều Khiển Admin (Cấp Key Mới)</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('add_key') }}" method="POST" class="row g-3">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="new_key" placeholder="Nhập key mới cho khách" required>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Tạo Key</button>
+                    </div>
+                </form>
+                <div class="mt-2 text-muted small">
+                    Thông tin liên hệ hỗ trợ khách mua key: SĐT: <strong>0964058714</strong> | Email: <strong>anhh.compt`gmail.com</strong>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card shadow mb-4">
+            <div class="card-header bg-success text-white">
+                <h5>📤 Tải Lên File (Không giới hạn dung lượng)</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <input class="form-control" type="file" name="file" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Upload Lên Cloud</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow">
+            <div class="card-header bg-secondary text-white">
+                <h5>📂 Danh Sách File Đã Lưu Trữ</h5>
+            </div>
+            <div class="card-body">
+                {% if files %}
+                    <ul class="list-group">
+                        {% for file in files %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ file }}
+                                <a href="{{ url_for('download', filename=file) }}" class="btn btn-primary btn-sm">Download</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Chưa có file nào trên hệ thống cloud.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
