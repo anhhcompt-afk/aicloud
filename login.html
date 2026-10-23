@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập - Virtual Cloud Storage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>Hệ Thống Cloud Ảo Không Giới Hạn</h3>
+                    </div>
+                    <div class="card-body">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="key" class="form-label">Nhập Key Truy Cập:</label>
+                                <input type="text" class="form-control" id="key" name="key" required placeholder="Nhập key của bạn...">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Truy Cập Cloud</button>
+                        </form>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <h5 class="text-danger">Thuê tài khoản / Mua Key sử dụng:</h5>
+                            <p class="mb-1">Quét mã QR hoặc chuyển khoản theo thông tin:</p>
+                            <p class="mb-1">Chủ tài khoản: <strong>HOANG HAI AN</strong>[span_0](start_span)[span_0](end_span)</p>
+                            <p class="mb-1">Số tài khoản: <strong>0030132291981</strong> - Ngân hàng: <strong>MB</strong>[span_1](start_span)[span_1](end_span)</p>
+                            
+                            <div class="my-3">
+                                <!-- Đặt file ảnh QR vào thư mục static/qr.png -->
+                                <img src="{{ url_for('static', filename='qr.png') }}" alt="QR Code Thanh Toan" class="img-fluid border" style="max-width: 220px;">
+                            </div>
+                            
+                            <p class="text-muted small">
+                                Sau khi thanh toán, vui lòng liên hệ Admin để nhận Key qua:<br>
+                                📞 SĐT/Zalo: <strong>0964058714</strong> | ✉️ Email: <strong>anhh.compt@gmail.com</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
